@@ -39,3 +39,7 @@ env/
 # OS/editor files
 .DS_Store
 Thumbs.db
+
+# Agent
+AGENTS.md
+CLAUDE.md

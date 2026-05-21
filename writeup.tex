@@ -1,0 +1,285 @@
+\documentclass[11pt]{article}
+
+% basic packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+% title info
+\title{EE/CS 148B Homework 3 Writeup}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Assignment Overview}
+
+This writeup contains my responses, results, plots, and discussion for Homework 3.
+
+\section*{2. Vision Transformer}
+
+\subsection*{2.4 Design Questions}
+
+\subsubsection*{CLS Token vs. Mean Pooling}
+
+Write your 3--4 sentence response here.
+
+\subsubsection*{Effect of Patch Size}
+
+For a $224 \times 224$ image, the number of patches is
+
+\[
+N = \left(\frac{224}{P}\right)^2.
+\]
+
+\begin{center}
+\begin{tabular}{c c c}
+\toprule
+Patch Size $P$ & Number of Patches $N$ & Time Mean $\pm$ Std \\
+\midrule
+8  & 784 & insert result here \\
+16 & 196 & insert result here \\
+32 & 49  & insert result here \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 2--3 sentence discussion here.
+
+\section*{3. CLIP-Style Contrastive Pretraining}
+
+\subsection*{3.2 Symmetric InfoNCE Loss}
+
+The loss is symmetric because it trains image-to-text matching and text-to-image matching at the same time.
+
+\subsection*{3.3 Pretraining}
+
+\subsubsection*{Training Loss Curve}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/training_loss.png}
+    \caption{Training loss over epochs.}
+\end{figure}
+
+\subsubsection*{Zero-Shot Validation Accuracy Curve}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/val_accuracy.png}
+    \caption{Zero-shot validation accuracy over epochs.}
+\end{figure}
+
+Write your 2--3 sentence discussion here.
+
+\subsection*{3.4 Qualitative Analysis}
+
+\begin{center}
+\begin{tabular}{c c c}
+\toprule
+Example & True Label & Predicted Label \\
+\midrule
+1 & insert label & insert label \\
+2 & insert label & insert label \\
+3 & insert label & insert label \\
+4 & insert label & insert label \\
+5 & insert label & insert label \\
+6 & insert label & insert label \\
+7 & insert label & insert label \\
+8 & insert label & insert label \\
+9 & insert label & insert label \\
+10 & insert label & insert label \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 3--4 sentence discussion here.
+
+\section*{4. LoRA Fine-Tuning}
+
+\subsection*{4.1 LoRA-Wrapped Linear Layer}
+
+Total parameters: insert value here.
+
+Trainable parameters: insert value here.
+
+Trainable ratio: insert value here.
+
+\subsection*{4.2 Comparing Adaptation Strategies}
+
+\begin{center}
+\begin{tabular}{l c c c c}
+\toprule
+Method & Test Accuracy & Trainable Params & Peak Memory & Time \\
+\midrule
+Linear Probe & insert & insert & insert & insert \\
+LoRA & insert & insert & insert & insert \\
+Full Fine-Tuning & insert & insert & insert & insert \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 4--5 sentence discussion here.
+
+\subsection*{4.3 Rank Sweep}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/lora_rank_sweep.png}
+    \caption{Test accuracy as a function of LoRA rank.}
+\end{figure}
+
+Write your 3--4 sentence discussion here.
+
+\section*{5. Vision-Language Model}
+
+\subsection*{5.3 Vision-Language Projector}
+
+We need more than one linear layer because the projector must learn a richer mapping between the vision encoder space and the decoder embedding space. The extra nonlinearity gives the model more capacity while the encoder and decoder are frozen.
+
+\subsection*{5.4 Token Injection Strategies}
+
+\begin{center}
+\begin{tabular}{l c c c c}
+\toprule
+Injection Strategy & Accuracy & Visual Tokens & Peak Memory & Time per Step \\
+\midrule
+CLS-only & insert & insert & insert & insert \\
+All-patches & insert & insert & insert & insert \\
+Interleaved & insert & insert & insert & insert \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your discussion here.
+
+\subsection*{5.5 Attention Masking}
+
+\subsubsection*{Mask Diagrams}
+
+Insert your two mask diagrams here.
+
+\begin{center}
+\begin{tabular}{l c}
+\toprule
+Mask Type & Validation Accuracy \\
+\midrule
+Fully Causal & insert \\
+Image Bidirectional & insert \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 3--4 sentence discussion here.
+
+\subsection*{5.6 Freezing Strategies}
+
+\begin{center}
+\begin{tabular}{l c c c}
+\toprule
+Configuration & Validation Accuracy & Trainable Params & Peak Memory \\
+\midrule
+A: Projector Only & insert & insert & insert \\
+B: Projector + Decoder LoRA & insert & insert & insert \\
+C: Projector + Full Decoder & insert & insert & insert \\
+D: Full Fine-Tuning & insert & insert & insert \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 5--6 sentence discussion here.
+
+\subsection*{5.7 Qualitative Evaluation}
+
+\begin{center}
+\begin{tabular}{c p{4cm} c c}
+\toprule
+Example & Question & Ground Truth & Model Output \\
+\midrule
+1 & insert question & insert & insert \\
+2 & insert question & insert & insert \\
+3 & insert question & insert & insert \\
+4 & insert question & insert & insert \\
+5 & insert question & insert & insert \\
+6 & insert question & insert & insert \\
+7 & insert question & insert & insert \\
+8 & insert question & insert & insert \\
+9 & insert question & insert & insert \\
+10 & insert question & insert & insert \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 4--5 sentence discussion here.
+
+\section*{6. Positional Encodings and RoPE}
+
+\subsection*{6.1 1D RoPE}
+
+Measured norm difference after applying RoPE: insert value here.
+
+\subsection*{Learned PE vs. RoPE}
+
+\begin{center}
+\begin{tabular}{l c c}
+\toprule
+Positional Encoding & Train-Size Accuracy & Extrapolated-Size Accuracy \\
+\midrule
+Learned PE & insert & insert \\
+1D RoPE & insert & insert \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 3--4 sentence discussion here.
+
+\subsection*{6.2 2D RoPE}
+
+\begin{center}
+\begin{tabular}{l c c}
+\toprule
+Positional Encoding & Train-Size Accuracy & Extrapolated-Size Accuracy \\
+\midrule
+1D RoPE & insert & insert \\
+2D RoPE & insert & insert \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 2--3 sentence discussion here.
+
+\subsection*{6.3 Multimodal RoPE}
+
+\subsubsection*{Naive 1D Position IDs}
+
+Write paragraph 1 here.
+
+\subsubsection*{First Text Token Position under M-RoPE}
+
+Write paragraph 2 here.
+
+\subsubsection*{Why M-RoPE Uses Three Chunks}
+
+Write paragraph 3 here.
+
+\subsection*{Bonus: M-RoPE Implementation}
+
+\begin{center}
+\begin{tabular}{l c c}
+\toprule
+Position Method & Overall Accuracy & Spatial-Question Accuracy \\
+\midrule
+Naive 1D & insert & insert \\
+M-RoPE & insert & insert \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write your 3--4 sentence discussion here.
+
+\end{document}
